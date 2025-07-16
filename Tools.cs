@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Fresh_Tomatoes_APP
 {
@@ -80,5 +81,37 @@ namespace Fresh_Tomatoes_APP
             { return false; }
             return true;
         }
+    }
+}
+
+
+internal class XML_Manager
+{
+    private string FilePATH;
+    XmlDocument doc = new XmlDocument();
+    XmlNodeList nodeList;
+
+
+    XML_Manager(string filePath)
+    {
+        FilePATH = filePath;
+        doc.Load(FilePATH);
+        nodeList = doc.DocumentElement.ChildNodes;
+    }
+
+    public void Refresh_NodeList()
+    {
+        doc.Load(FilePATH);
+        nodeList = doc.SelectNodes(@"/galeria/imagem");
+    }
+
+    public void Get_Product(int index)
+    {
+        XmlNode node = nodeList.Item(index);
+
+        XmlElement element = node as XmlElement;
+        tb_id.Text = element.Attributes.GetNamedItem("id").Value;
+        tb_descricao.Text = element.Attributes.GetNamedItem("descricao").Value;
+        tb_fich.Text = element.Attributes.GetNamedItem("ficheiro").Value;
     }
 }
