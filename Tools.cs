@@ -4,7 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
+using Fresh_Tomatoes_APP;
 
 namespace Fresh_Tomatoes_APP
 {
@@ -84,34 +87,129 @@ namespace Fresh_Tomatoes_APP
     }
 }
 
+internal interface ProductManager
+{
+    // This Interface makes it possible to use XML and later change to SQL ;)
+    // Because we only need to change the instance of the Manager to use the XML/SQL implementation! :D
+    void Refresh_List();
+    Product Get_Product(int index);
+    List<Product> Get_Product_List();
+    void Change_Product(int index, Product product);
+    void Add_Product(Product product);
+    void Remove_Product(int index);
+}
 
-internal class XML_Manager
+internal class XML_Manager : ProductManager
 {
     private string FilePATH;
-    XmlDocument doc = new XmlDocument();
-    XmlNodeList nodeList;
+    private XmlDocument doc = new XmlDocument();
+    private XmlNodeList nodeList;
 
 
-    XML_Manager(string filePath)
+    public XML_Manager(string filePath)
     {
         FilePATH = filePath;
-        doc.Load(FilePATH);
-        nodeList = doc.DocumentElement.ChildNodes;
+        Refresh_List();
     }
 
-    public void Refresh_NodeList()
+    public void Refresh_List()
     {
         doc.Load(FilePATH);
-        nodeList = doc.SelectNodes(@"/galeria/imagem");
+        nodeList = doc.SelectNodes(@"/lista/produto");
     }
 
-    public void Get_Product(int index)
+    public Product Get_Product(int index)
     {
         XmlNode node = nodeList.Item(index);
 
         XmlElement element = node as XmlElement;
-        tb_id.Text = element.Attributes.GetNamedItem("id").Value;
-        tb_descricao.Text = element.Attributes.GetNamedItem("descricao").Value;
-        tb_fich.Text = element.Attributes.GetNamedItem("ficheiro").Value;
+        string name = element.Attributes.GetNamedItem("name").Value;
+        string description = element.Attributes.GetNamedItem("description").Value;
+        string category = element.Attributes.GetNamedItem("category").Value;
+        int rating = int.Parse(element.Attributes.GetNamedItem("rating").Value);
+
+        Product product = new Product(name, description, category, rating);
+        return product;
+    }
+
+    public List<Product> Get_Product_List()
+    {
+        List<Product> Product_List = new List<Product>();
+
+        foreach (XmlNode node in nodeList)
+        {
+            XmlElement element = node as XmlElement;
+            string name = element.Attributes.GetNamedItem("name").Value;
+            string description = element.Attributes.GetNamedItem("description").Value;
+            string category = element.Attributes.GetNamedItem("category").Value;
+            int rating = int.Parse(element.Attributes.GetNamedItem("rating").Value);
+            Product product = new Product(name, description, category, rating);
+            Product_List.Add(product);
+        }
+
+        return Product_List;
+    }
+
+    public void Change_Product(int index, Product product)
+    {
+        XmlNode node = nodeList.Item(index);
+        XmlElement element = node as XmlElement;
+        element.SetAttribute("name", product.GetName());
+        element.SetAttribute("description", product.GetDescription());
+        element.SetAttribute("category", product.GetCategory());
+        element.SetAttribute("rating", product.GetRating().ToString());
+        doc.Save(FilePATH);
+    }
+
+    public void Add_Product(Product product)
+    {
+        XmlNode node = doc.SelectSingleNode("/lista");
+        XmlElement newProduct = doc.CreateElement("produto");
+
+        newProduct.SetAttribute("name", product.GetName());
+        newProduct.SetAttribute("description", product.GetDescription());
+        newProduct.SetAttribute("category", product.GetCategory());
+        newProduct.SetAttribute("rating", product.GetRating().ToString());
+        node.AppendChild(newProduct);
+
+        doc.Save(FilePATH);
+        Refresh_List();
+    }
+
+    public void Remove_Product(int index)
+    {
+        XmlNode node = nodeList.Item(index);
+        XmlElement element = node as XmlElement;
+        element.ParentNode.RemoveChild(node);
+
+        doc.Save(FilePATH);
+        Refresh_List();
+    }
+}
+
+public class Switch_Window
+{
+    List<Form> forms = new List<Form>();
+
+    public Switch_Window()
+    {
+        // Constructor for the window switcher
+        // This can be used to manage multiple forms/windows in the application
+    }
+
+    public void ShowForm(int idx_form)
+    {
+        // This method can be used to switch to a specific form
+        // For example, form.Show(); and this.Hide();
+        if (idx_form < 1 || idx_form > forms.Count)
+        {
+            throw new ArgumentOutOfRangeException("Invalid form index.");
+        }
+        forms[idx_form - 1].Show();
+    }
+    public void AddForm(Form form)
+    {
+        // This method can be used to add a new form to the switcher
+        forms.Add(form);
     }
 }

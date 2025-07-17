@@ -12,9 +12,17 @@ namespace Fresh_Tomatoes_APP
 {
     public partial class Form1 : Form
     {
+        public static Switch_Window switch_window = new Switch_Window();
+
         public Form1()
         {
             InitializeComponent();
+
+            // Initialize the list of forms
+            switch_window.AddForm(this);
+            switch_window.AddForm(new Form2());
+            switch_window.AddForm(new Form3());
+            switch_window.AddForm(new Form4());
         }
 
         private void btn_login_Click(object sender, EventArgs e)
@@ -28,12 +36,19 @@ namespace Fresh_Tomatoes_APP
 
             if (username == USER && password == PASS)
             {
+                // Old way to change Windows:
                 // open Form2
-                Form2 form2 = new Form2();
+                /*Form2 form2 = new Form2();
                 form2.Show();
 
                 // Hide and close this form
+                this.Hide();*/
+
+                // New way to change Windows using Switch_Window class:
+                // go to Form 2:
+                switch_window.ShowForm(2);
                 this.Hide();
+
             }
             else
             {

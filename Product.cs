@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Fresh_Tomatoes_APP
 {
-    internal class Product
+    public class Product
     {
         private string product_name;
         private string product_description;
         private string product_category;
         private int product_rating;
 
-        Product(string name, string description, string category, int rating)
+        public Product(string name, string description, string category, int rating)
         {
             product_name = name;
             product_description = description;
@@ -44,6 +44,10 @@ namespace Fresh_Tomatoes_APP
 
         public void SetName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Product name cannot be null or empty.");
+            }
             product_name = name;
         }
         public void SetDescription(string description)
@@ -52,6 +56,10 @@ namespace Fresh_Tomatoes_APP
         }
         public void SetCategory(string category)
         {
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                throw new ArgumentException("Product category cannot be null or empty.");
+            }
             product_category = category;
         }
         public void SetRating(int rating)

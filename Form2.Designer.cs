@@ -83,6 +83,7 @@
             this.btn_list_products.TabIndex = 10;
             this.btn_list_products.Text = "List Products";
             this.btn_list_products.UseVisualStyleBackColor = true;
+            this.btn_list_products.Click += new System.EventHandler(this.btn_list_products_Click);
             // 
             // btn_add_product
             // 
@@ -93,6 +94,7 @@
             this.btn_add_product.TabIndex = 11;
             this.btn_add_product.Text = "Add Product";
             this.btn_add_product.UseVisualStyleBackColor = true;
+            this.btn_add_product.Click += new System.EventHandler(this.btn_add_product_Click);
             // 
             // label2
             // 
@@ -136,7 +138,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
