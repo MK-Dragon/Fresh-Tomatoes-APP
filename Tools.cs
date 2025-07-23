@@ -11,11 +11,6 @@ using Fresh_Tomatoes_APP;
 
 namespace Fresh_Tomatoes_APP
 {
-    internal class Tools
-    {
-
-    }
-
     internal class FileManager
     {
         private string FolderPATH;
@@ -97,6 +92,8 @@ internal interface ProductManager
     void Change_Product(int index, Product product);
     void Add_Product(Product product);
     void Remove_Product(int index);
+
+    List<string> Get_Categories();
 }
 
 internal class XML_Manager : ProductManager
@@ -104,10 +101,13 @@ internal class XML_Manager : ProductManager
     private string FilePATH;
     private XmlDocument doc = new XmlDocument();
     private XmlNodeList nodeList;
+    public string UserName;
 
 
-    public XML_Manager(string filePath)
+    public XML_Manager(string userName, string filePath)
     {
+        UserName = userName;
+
         FilePATH = filePath;
         Refresh_List();
     }
@@ -128,7 +128,7 @@ internal class XML_Manager : ProductManager
         string category = element.Attributes.GetNamedItem("category").Value;
         int rating = int.Parse(element.Attributes.GetNamedItem("rating").Value);
 
-        Product product = new Product(name, description, category, rating);
+        Product product = new Product(UserName, name, description, category, rating);
         return product;
     }
 
@@ -143,17 +143,18 @@ internal class XML_Manager : ProductManager
             string description = element.Attributes.GetNamedItem("description").Value;
             string category = element.Attributes.GetNamedItem("category").Value;
             int rating = int.Parse(element.Attributes.GetNamedItem("rating").Value);
-            Product product = new Product(name, description, category, rating);
+            Product product = new Product(UserName, name, description, category, rating);
             Product_List.Add(product);
         }
 
-        return Product_List;
+        return Product_List.Where(x => x.GetUserName() == UserName).ToList();
     }
 
     public void Change_Product(int index, Product product)
     {
         XmlNode node = nodeList.Item(index);
         XmlElement element = node as XmlElement;
+        element.SetAttribute("user", product.GetUserName());
         element.SetAttribute("name", product.GetName());
         element.SetAttribute("description", product.GetDescription());
         element.SetAttribute("category", product.GetCategory());
@@ -166,6 +167,7 @@ internal class XML_Manager : ProductManager
         XmlNode node = doc.SelectSingleNode("/lista");
         XmlElement newProduct = doc.CreateElement("produto");
 
+        newProduct.SetAttribute("user", product.GetUserName());
         newProduct.SetAttribute("name", product.GetName());
         newProduct.SetAttribute("description", product.GetDescription());
         newProduct.SetAttribute("category", product.GetCategory());
@@ -185,6 +187,23 @@ internal class XML_Manager : ProductManager
         doc.Save(FilePATH);
         Refresh_List();
     }
+
+    public List<string> Get_Categories()
+    {
+        List<string> categories = new List<string>();
+        foreach (XmlNode node in nodeList)
+        {
+            XmlElement element = node as XmlElement;
+            string category = element.Attributes.GetNamedItem("category").Value;
+            string user = element.Attributes.GetNamedItem("user").Value;
+
+            if (!categories.Contains(category) && user == UserName)
+            {
+                categories.Add(category);
+            }
+        }
+        return categories;
+    }
 }
 
 public class Switch_Window
@@ -200,16 +219,38 @@ public class Switch_Window
     public void ShowForm(int idx_form)
     {
         // This method can be used to switch to a specific form
-        // For example, form.Show(); and this.Hide();
+
+        // Check if the index is valid
         if (idx_form < 1 || idx_form > forms.Count)
         {
             throw new ArgumentOutOfRangeException("Invalid form index.");
         }
+
+        // Hide all forms
+        foreach (Form form in forms)
+        {
+            form.Hide();
+        }
+        CenterForms();
+
+        // Show the selected form
         forms[idx_form - 1].Show();
     }
+
     public void AddForm(Form form)
     {
         // This method can be used to add a new form to the switcher
         forms.Add(form);
+    }
+
+    public void CenterForms()
+    {
+        foreach (Form form in forms)
+        {
+            form.SetDesktopLocation(
+                (Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2,
+                (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2
+            );
+        }
     }
 }

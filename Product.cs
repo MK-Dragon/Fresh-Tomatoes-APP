@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fresh_Tomatoes_APP;
 
 namespace Fresh_Tomatoes_APP
 {
     public class Product
     {
+        private string user_name;
         private string product_name;
         private string product_description;
         private string product_category;
         private int product_rating;
 
-        public Product(string name, string description, string category, int rating)
+        public Product(string username, string name, string description, string category, int rating)
         {
+            user_name = username;
             product_name = name;
             product_description = description;
             product_category = category;
@@ -22,6 +25,10 @@ namespace Fresh_Tomatoes_APP
         }
 
 
+        public string GetUserName()
+        {
+            return user_name;
+        }
 
         public string GetName()
         {
@@ -50,10 +57,17 @@ namespace Fresh_Tomatoes_APP
             }
             product_name = name;
         }
+
+        public void SetUserName(string username)
+        {
+            user_name = username; 
+        }
+
         public void SetDescription(string description)
         {
             product_description = description;
         }
+
         public void SetCategory(string category)
         {
             if (string.IsNullOrWhiteSpace(category))
@@ -62,6 +76,7 @@ namespace Fresh_Tomatoes_APP
             }
             product_category = category;
         }
+
         public void SetRating(int rating)
         {
             if (rating < 0 || rating > 5)

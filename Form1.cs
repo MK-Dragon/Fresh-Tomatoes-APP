@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Fresh_Tomatoes_APP;
 
 namespace Fresh_Tomatoes_APP
 {
@@ -17,12 +18,6 @@ namespace Fresh_Tomatoes_APP
         public Form1()
         {
             InitializeComponent();
-
-            // Initialize the list of forms
-            switch_window.AddForm(this);
-            switch_window.AddForm(new Form2());
-            switch_window.AddForm(new Form3());
-            switch_window.AddForm(new Form4());
         }
 
         private void btn_login_Click(object sender, EventArgs e)
@@ -36,6 +31,13 @@ namespace Fresh_Tomatoes_APP
 
             if (username == USER && password == PASS)
             {
+                // Initialize the list of forms
+                switch_window.AddForm(this);
+                switch_window.AddForm(new Form2(tb_username.Text));
+                switch_window.AddForm(new Form3(tb_username.Text));
+                switch_window.AddForm(new Form4());
+
+
                 // Old way to change Windows:
                 // open Form2
                 /*Form2 form2 = new Form2();

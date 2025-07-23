@@ -7,16 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Fresh_Tomatoes_APP;
 
 namespace Fresh_Tomatoes_APP
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        private string user;
+        XML_Manager product_manager;
+
+        public Form2(string username)
         {
             InitializeComponent();
+            user = username;
             // TODO : add: load products from database/file
+            product_manager = new XML_Manager(this.user, "C:\\Users\\MC\\Documents\\MK Code\\C _harp\\Fresh Tomatoes APP\\produtos.xml");
         }
+
+        
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
