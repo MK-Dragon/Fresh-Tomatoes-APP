@@ -13,12 +13,12 @@ namespace Fresh_Tomatoes_APP
 {
     public partial class Form4 : Form
     {
-        public Form4(string username)
+        public Form4(string username, XML_Manager manager)
         {
             InitializeComponent();
 
             // start Connections and get products
-            product_manager = new XML_Manager("admin", "C:\\Users\\MC\\Documents\\MK Code\\C _harp\\Fresh Tomatoes APP\\produtos.xml");
+            this.product_manager = manager;
             //product_manager.Refresh_List();
 
             // load ComboBox with categories
@@ -27,8 +27,8 @@ namespace Fresh_Tomatoes_APP
             // load ComboBox Order By:
             cbb_order_by.Items.Add("A -> Z");
             cbb_order_by.Items.Add("Z -> A");
-            cbb_order_by.Items.Add("Rating: Low -> High");
-            cbb_order_by.Items.Add("Rating: High -> Low");
+            //cbb_order_by.Items.Add("Rating: Low -> High");
+            //cbb_order_by.Items.Add("Rating: High -> Low");
             cbb_order_by.SelectedIndex = 0; // default selection
 
             // F#### Y## Bug!!!
@@ -59,6 +59,7 @@ namespace Fresh_Tomatoes_APP
         private void btn_refresh_Click(object sender, EventArgs e)
         {
             list_products();
+            list_categories();
         }
 
         public void list_products()

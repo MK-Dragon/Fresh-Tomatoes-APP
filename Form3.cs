@@ -18,11 +18,11 @@ namespace Fresh_Tomatoes_APP
         //SQL_Manager product_manager;
 
 
-        public Form3(string user)
+        public Form3(string user, XML_Manager manager)
         {
             InitializeComponent();
             this.user = user;
-            product_manager = new XML_Manager(this.user, "C:\\Users\\MC\\Documents\\MK Code\\C _harp\\Fresh Tomatoes APP\\produtos.xml");
+            this.product_manager = manager;
             //product_manager = new SQL_Manager();
             refrersh_cbb();
         }

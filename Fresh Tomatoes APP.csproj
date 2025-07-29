@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="produtos.xml" />
+    <Content Include="users.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

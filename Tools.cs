@@ -158,7 +158,7 @@ internal interface ProductManager
 
 
 
-internal class XML_Manager : ProductManager
+public class XML_Manager : ProductManager
 {
     private string FilePATH;
     private XmlDocument doc = new XmlDocument();
@@ -205,8 +205,14 @@ internal class XML_Manager : ProductManager
             string description = element.Attributes.GetNamedItem("description").Value;
             string category = element.Attributes.GetNamedItem("category").Value;
             int rating = int.Parse(element.Attributes.GetNamedItem("rating").Value);
-            Product product = new Product(UserName, name, description, category, rating);
-            Product_List.Add(product);
+
+            if (UserName == element.Attributes.GetNamedItem("user").Value)
+            {
+                // Only add products that belong to the current user
+                Product product = new Product(UserName, name, description, category, rating);
+                Product_List.Add(product);
+            }
+                
         }
 
         return Product_List.Where(x => x.GetUserName() == UserName).ToList();

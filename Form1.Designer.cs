@@ -37,6 +37,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.btn_add_usar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -120,11 +121,23 @@
             this.pictureBox3.TabIndex = 7;
             this.pictureBox3.TabStop = false;
             // 
+            // btn_add_usar
+            // 
+            this.btn_add_usar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_add_usar.Location = new System.Drawing.Point(553, 426);
+            this.btn_add_usar.Name = "btn_add_usar";
+            this.btn_add_usar.Size = new System.Drawing.Size(112, 23);
+            this.btn_add_usar.TabIndex = 8;
+            this.btn_add_usar.Text = "New User?";
+            this.btn_add_usar.UseVisualStyleBackColor = true;
+            this.btn_add_usar.Click += new System.EventHandler(this.btn_add_usar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_add_usar);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -155,6 +168,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button btn_add_usar;
     }
 }
 

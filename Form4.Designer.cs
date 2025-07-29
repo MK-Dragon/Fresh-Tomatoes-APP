@@ -93,7 +93,7 @@
             // btn_refresh
             // 
             this.btn_refresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_refresh.Location = new System.Drawing.Point(630, 71);
+            this.btn_refresh.Location = new System.Drawing.Point(627, 30);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(109, 40);
             this.btn_refresh.TabIndex = 21;
@@ -103,10 +103,12 @@
             // 
             // lb_products
             // 
+            this.lb_products.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lb_products.FormattingEnabled = true;
-            this.lb_products.Location = new System.Drawing.Point(226, 82);
+            this.lb_products.ItemHeight = 16;
+            this.lb_products.Location = new System.Drawing.Point(173, 82);
             this.lb_products.Name = "lb_products";
-            this.lb_products.Size = new System.Drawing.Size(354, 355);
+            this.lb_products.Size = new System.Drawing.Size(456, 340);
             this.lb_products.TabIndex = 22;
             // 
             // cbb_category
