@@ -14,6 +14,7 @@ namespace Fresh_Tomatoes_APP
         private string product_description;
         private string product_category;
         private int product_rating;
+        private string image_path = "";
 
         public Product(string username, string name, string description, string category, int rating)
         {
@@ -22,6 +23,16 @@ namespace Fresh_Tomatoes_APP
             product_description = description;
             product_category = category;
             product_rating = rating;
+        }
+
+        public Product(string username, string name, string description, string category, int rating, string imagePath)
+        {
+            user_name = username;
+            product_name = name;
+            product_description = description;
+            product_category = category;
+            product_rating = rating;
+            image_path = imagePath;
         }
 
 
@@ -45,6 +56,16 @@ namespace Fresh_Tomatoes_APP
         public int GetRating()
         {
             return product_rating;
+        }
+
+        public string GetImagePath()
+        {
+            return image_path;
+        }
+
+        public void SetImagePath(string path)
+        {
+            image_path = path;
         }
 
 

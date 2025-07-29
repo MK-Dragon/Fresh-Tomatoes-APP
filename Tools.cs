@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Fresh_Tomatoes_APP;
+using MySql.Data.MySqlClient;
 
 namespace Fresh_Tomatoes_APP
 {
@@ -82,6 +84,60 @@ namespace Fresh_Tomatoes_APP
     }
 }
 
+
+public class Switch_Window
+{
+    List<Form> forms = new List<Form>();
+
+    public Switch_Window()
+    {
+        // Constructor for the window switcher
+        // This can be used to manage multiple forms/windows in the application
+    }
+
+    public void ShowForm(int idx_form)
+    {
+        // This method can be used to switch to a specific form
+
+        // Check if the index is valid
+        if (idx_form < 1 || idx_form > forms.Count)
+        {
+            throw new ArgumentOutOfRangeException("Invalid form index.");
+        }
+
+        // Hide all forms
+        foreach (Form form in forms)
+        {
+            form.Hide();
+        }
+        CenterForms();
+
+        // Show the selected form
+        forms[idx_form - 1].Show();
+    }
+
+    public void AddForm(Form form)
+    {
+        // This method can be used to add a new form to the switcher
+        forms.Add(form);
+    }
+
+    public void CenterForms()
+    {
+        foreach (Form form in forms)
+        {
+            form.SetDesktopLocation(
+                (Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2,
+                (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2
+            );
+        }
+    }
+}
+
+
+
+
+
 internal interface ProductManager
 {
     // This Interface makes it possible to use XML and later change to SQL ;)
@@ -94,7 +150,13 @@ internal interface ProductManager
     void Remove_Product(int index);
 
     List<string> Get_Categories();
+
+    List<Product> SortProducts(string sort_by, int min_ration, int max_rating, string category);
 }
+
+
+
+
 
 internal class XML_Manager : ProductManager
 {
@@ -204,53 +266,151 @@ internal class XML_Manager : ProductManager
         }
         return categories;
     }
+
+    public List<Product> SortProducts(string sort_by, int min_ration, int max_rating, string category)
+    {
+        // get products from XML
+        List<Product> products = Get_Product_List();
+
+        // Sort products based on the sort_by parameter
+        switch (sort_by)
+        {
+            case "A -> Z":
+                products.Sort((x, y) => string.Compare(x.GetName(), y.GetName()));
+                break;
+            case "Z -> A":
+                products.Sort((x, y) => string.Compare(y.GetName(), x.GetName()));
+                break;
+            case "Rating: Low -> High":
+                // Implement sorting logic for Rating: Low -> High
+                break;
+            case "Rating: High -> Low":
+                // Implement sorting logic for Rating: High -> Low
+                break;
+
+            default:
+                break;
+        }
+
+        // Filter products based on rating
+        List<Product> new_products = new List<Product>();
+        foreach (Product pro in products)
+        {
+            if (min_ration <= pro.GetRating() && pro.GetRating() <= max_rating)
+            {
+                if (category == "All" || pro.GetCategory() == category)
+                {
+                    new_products.Add(pro);
+                }
+            }
+        }
+
+        // Return the sorted and filtered list of products
+        return new_products;
+    }
 }
 
-public class Switch_Window
+
+
+
+
+internal class SQL_Manager : ProductManager
 {
-    List<Form> forms = new List<Form>();
+    private string connectionString = "server=192.168.0.30;port=3306;database=fresh_tomatoes;uid=fresh;pwd=123;";
 
-    public Switch_Window()
+    public SQL_Manager()
     {
-        // Constructor for the window switcher
-        // This can be used to manage multiple forms/windows in the application
+        // Constructor for the SQL manager
     }
 
-    public void ShowForm(int idx_form)
+
+
+    public void Refresh_List()
     {
-        // This method can be used to switch to a specific form
-
-        // Check if the index is valid
-        if (idx_form < 1 || idx_form > forms.Count)
+        //
+    }
+    public Product Get_Product(int index)
+    {
+        //
+        return new Product("user", "name", "description", "category", 5); // Example return
+    }
+    public List<Product> Get_Product_List()
+    {
+        return new List<Product>
         {
-            throw new ArgumentOutOfRangeException("Invalid form index.");
-        }
-
-        // Hide all forms
-        foreach (Form form in forms)
+            new Product("user1", "Product1", "Description1", "Category1", 5),
+            new Product("user2", "Product2", "Description2", "Category2", 4)
+        }; // Example return
+    }
+    public void Change_Product(int index, Product product)
+    {
+        //
+    }
+    public void Add_Product(Product product)
+    {
+        using (MySqlConnection conn = new MySqlConnection(connectionString))
         {
-            form.Hide();
-        }
-        CenterForms();
+            conn.Open();
 
-        // Show the selected form
-        forms[idx_form - 1].Show();
+            string query = @"INSERT INTO Produto 
+                        (nome, avaliacao, opiniao, id_categoria, imagem_path) 
+                         VALUES 
+                        (@nome, @avaliacao, @opiniao, @id_categoria, @imagem_path);";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                // TODO: find id_categoria
+                int idCategoria = 1;
+
+                cmd.Parameters.AddWithValue("@nome", product.GetName());
+                cmd.Parameters.AddWithValue("@avaliacao", product.GetRating());
+                cmd.Parameters.AddWithValue("@opiniao", product.GetDescription());
+                cmd.Parameters.AddWithValue("@id_categoria", idCategoria);
+                cmd.Parameters.AddWithValue("@imagem_path", product.GetImagePath());
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+    public void Remove_Product(int index)
+    {
+        //
     }
 
-    public void AddForm(Form form)
+    public List<string> Get_Categories()
     {
-        // This method can be used to add a new form to the switcher
-        forms.Add(form);
+        return new List<string>
+        {
+            "Category1",
+            "Category2",
+            "Category3"
+        }; // Example return
     }
 
-    public void CenterForms()
+    public List<Product> SortProducts(string sort_by, int min_ration, int max_rating, string category)
     {
-        foreach (Form form in forms)
+        switch (sort_by)
         {
-            form.SetDesktopLocation(
-                (Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2,
-                (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2
-            );
+            case "A -> Z":
+                // Implement sorting logic for A -> Z
+                break;
+            case "Z -> A":
+                // Implement sorting logic for Z -> A
+                break;
+            case "Rating: Low -> High":
+                // Implement sorting logic for Rating: Low -> High
+                break;
+            case "Rating: High -> Low":
+                // Implement sorting logic for Rating: High -> Low
+                break;
+
+            default:
+                break;
         }
+        return new List<Product>
+        {
+            new Product("user1", "Product1", "Description1", "Category1", 5),
+            new Product("user2", "Product2", "Description2", "Category2", 4)
+        }; // Example return, sorting logic can be added later
     }
 }

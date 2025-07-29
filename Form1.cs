@@ -25,6 +25,8 @@ namespace Fresh_Tomatoes_APP
             string USER = "admin";
             string PASS = "123";
 
+            
+
             // Get user and pass
             string username = tb_username.Text;
             string password = tb_password.Text;
@@ -33,9 +35,9 @@ namespace Fresh_Tomatoes_APP
             {
                 // Initialize the list of forms
                 switch_window.AddForm(this);
-                switch_window.AddForm(new Form2(tb_username.Text));
-                switch_window.AddForm(new Form3(tb_username.Text));
-                switch_window.AddForm(new Form4());
+                switch_window.AddForm(new Form2(username));
+                switch_window.AddForm(new Form3(username));
+                switch_window.AddForm(new Form4(username));
 
 
                 // Old way to change Windows:
@@ -48,6 +50,7 @@ namespace Fresh_Tomatoes_APP
 
                 // New way to change Windows using Switch_Window class:
                 // go to Form 2:
+
                 switch_window.ShowForm(2);
                 this.Hide();
 

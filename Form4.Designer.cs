@@ -35,8 +35,18 @@
             this.btn_back = new System.Windows.Forms.Button();
             this.btn_refresh = new System.Windows.Forms.Button();
             this.lb_products = new System.Windows.Forms.ListBox();
+            this.cbb_category = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_orber_by = new System.Windows.Forms.Label();
+            this.cbb_order_by = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.num_min_stars = new System.Windows.Forms.NumericUpDown();
+            this.num_stars_max = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_min_stars)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_stars_max)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -96,14 +106,130 @@
             this.lb_products.FormattingEnabled = true;
             this.lb_products.Location = new System.Drawing.Point(226, 82);
             this.lb_products.Name = "lb_products";
-            this.lb_products.Size = new System.Drawing.Size(340, 355);
+            this.lb_products.Size = new System.Drawing.Size(354, 355);
             this.lb_products.TabIndex = 22;
+            // 
+            // cbb_category
+            // 
+            this.cbb_category.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbb_category.FormattingEnabled = true;
+            this.cbb_category.Location = new System.Drawing.Point(12, 105);
+            this.cbb_category.Name = "cbb_category";
+            this.cbb_category.Size = new System.Drawing.Size(121, 32);
+            this.cbb_category.TabIndex = 23;
+            this.cbb_category.SelectedIndexChanged += new System.EventHandler(this.cbb_category_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 82);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(124, 20);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Filters Category:";
+            // 
+            // lbl_orber_by
+            // 
+            this.lbl_orber_by.AutoSize = true;
+            this.lbl_orber_by.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_orber_by.Location = new System.Drawing.Point(12, 155);
+            this.lbl_orber_by.Name = "lbl_orber_by";
+            this.lbl_orber_by.Size = new System.Drawing.Size(75, 20);
+            this.lbl_orber_by.TabIndex = 26;
+            this.lbl_orber_by.Text = "Order By:";
+            // 
+            // cbb_order_by
+            // 
+            this.cbb_order_by.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbb_order_by.FormattingEnabled = true;
+            this.cbb_order_by.Location = new System.Drawing.Point(12, 178);
+            this.cbb_order_by.Name = "cbb_order_by";
+            this.cbb_order_by.Size = new System.Drawing.Size(121, 32);
+            this.cbb_order_by.TabIndex = 25;
+            this.cbb_order_by.SelectedIndexChanged += new System.EventHandler(this.cbb_order_by_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(12, 231);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(112, 20);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Filter By Stars:";
+            // 
+            // num_min_stars
+            // 
+            this.num_min_stars.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.num_min_stars.Location = new System.Drawing.Point(16, 254);
+            this.num_min_stars.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.num_min_stars.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.num_min_stars.Name = "num_min_stars";
+            this.num_min_stars.Size = new System.Drawing.Size(38, 29);
+            this.num_min_stars.TabIndex = 29;
+            this.num_min_stars.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.num_min_stars.ValueChanged += new System.EventHandler(this.num_min_stars_ValueChanged);
+            // 
+            // num_stars_max
+            // 
+            this.num_stars_max.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.num_stars_max.Location = new System.Drawing.Point(98, 254);
+            this.num_stars_max.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.num_stars_max.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.num_stars_max.Name = "num_stars_max";
+            this.num_stars_max.Size = new System.Drawing.Size(38, 29);
+            this.num_stars_max.TabIndex = 30;
+            this.num_stars_max.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.num_stars_max.ValueChanged += new System.EventHandler(this.num_stars_max_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(66, 259);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(22, 20);
+            this.label5.TabIndex = 31;
+            this.label5.Text = " - ";
             // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.num_stars_max);
+            this.Controls.Add(this.num_min_stars);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbl_orber_by);
+            this.Controls.Add(this.cbb_order_by);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbb_category);
             this.Controls.Add(this.lb_products);
             this.Controls.Add(this.btn_refresh);
             this.Controls.Add(this.label1);
@@ -115,6 +241,8 @@
             this.Text = "Form4";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_min_stars)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_stars_max)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,5 +256,13 @@
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.ListBox lb_products;
+        private System.Windows.Forms.ComboBox cbb_category;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbl_orber_by;
+        private System.Windows.Forms.ComboBox cbb_order_by;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown num_min_stars;
+        private System.Windows.Forms.NumericUpDown num_stars_max;
+        private System.Windows.Forms.Label label5;
     }
 }
