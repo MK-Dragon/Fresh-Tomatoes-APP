@@ -40,6 +40,9 @@ namespace Fresh_Tomatoes_APP
             // Voltar ao Form1
             Form1.switch_window.AddForm(new Form1()); // recria Form1 limpo
             Form1.switch_window.ShowForm(1);
+
+            // Esconder o Form2
+            this.Hide();
         }
 
         private void btn_add_product_Click(object sender, EventArgs e)

@@ -104,5 +104,11 @@ namespace Fresh_Tomatoes_APP
         {
             list_products();
         }
+
+        private void btn_back_Click_1(object sender, EventArgs e)
+        {
+            Form1.switch_window.ShowForm(2);
+            this.Hide();
+        }
     }
 }

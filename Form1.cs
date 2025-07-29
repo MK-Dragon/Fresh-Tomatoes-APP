@@ -141,6 +141,5 @@ namespace Fresh_Tomatoes_APP
                 MessageBox.Show("Erro ao criar utilizador: " + ex.Message);
             }
         }
-
     }
 }
