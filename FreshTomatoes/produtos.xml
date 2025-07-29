@@ -1,0 +1,5 @@
+<lista>
+  <produto user="MC" name="Batatas Fritas" description="Muito bas MEsmo" category="Snacks" rating="5" />
+  <produto user="MC" name="Pastilha elastica" description="Boas mas..." category="Snacks" rating="4" />
+  <produto user="MC" name="Cão de Água" description="Não durou muito..." category="Praia" rating="2" />
+</lista>
